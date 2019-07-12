@@ -13,6 +13,8 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True, help="path to the input image")
 ap.add_argument("-o", "--output", required=True, help="path to the output directory to store augmentations examples")
 ap.add_argument("-t", "--total", type=int, default=100, help="# of training samples to generate")
+ap.add_argument("-p", "--prefix", type=str, default="image", help="prefix to add to all generated images")
+
 args = vars(ap.parse_args())
 
 # load the input image, convert itto a numpy array and then reshape it to have an extra dimension
@@ -36,7 +38,7 @@ total = 0
 
 # construct the actual python generator
 logging.debug("generating images...")
-imageGen = aug.flow(image, batch_size=1, save_to_dir=args['output'], save_prefix="image", save_format="jpg")
+imageGen = aug.flow(image, batch_size=1, save_to_dir=args['output'], save_prefix=args['prefix'], save_format="jpg")
 
 for image in imageGen:
     # increment counter
